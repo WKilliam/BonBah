@@ -1,0 +1,114 @@
+#parse("dashboard.html")
+#@mainLayout()
+<div class="media-list scrollertext">
+
+    <div class="item" href="/medias/$media.getId()">
+        <h1 class="title">
+            $media.getTitle()
+        </h1>
+    </div>
+    <div class="item" href="/medias/$media.getId()">
+        <h1 class="title">
+            $media.getTitle()
+        </h1>
+        <div>
+            <img src="$media.getUrlImage()" width="500" height="600">
+        </div>
+    </div>
+    <div class="item" href="/medias/$media.getId()">
+        <div class="title">
+            $media.getSummary()
+        </div>
+    </div>
+
+
+</div>
+
+
+<div class="media-list scrollertext">
+
+    <div class="item" href="/medias/$media.getId()">
+        <a class="item" href="$media.getTrailerUrl()">
+            <div class="title">
+                $media.getTitle()
+            </div>
+        </a>
+    </div>
+    <iframe id="myVideo" width="500" height="600" src="$media.getTrailerUrl()" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+
+    </iframe>
+
+
+
+
+    <div class="item" href="/medias/$media.getId()">
+    </div>
+
+
+</div>
+
+
+<!--
+
+
+
+
+
+
+<div class="scrollertext">
+    <div>
+        <img src="$media.getUrlImage()" width="500" height="600">
+    </div>
+    <div class="media-list">
+        test
+    </div>
+</div>
+
+
+<a>
+            $media.getTitle()
+        </a>
+
+
+
+<div>
+
+</div>
+
+<form method="POST" action="/signup" class="custom-form">
+
+    <div class="form-group">
+        <label for="email">Adresse email</label>
+        <input type="email" name="email" value="" id="email" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input type="password" name="password" id="password" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="password_confirm">Confirmez votre mot de passe</label>
+        <input type="password" name="password_confirm" id="password_confirm" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-6">
+                <input type="submit" name="Valider" class="btn btn-block bg-red" />
+            </div>
+            <div class="col-md-6">
+                <a href="/login" class="btn btn-block bg-blue">Connexion</a>
+            </div>
+        </div>
+    </div>
+
+    <span class="error-msg">
+                        </span>
+</form>
+
+<div>
+    #set($a = 1)
+
+</div>-->
+#end

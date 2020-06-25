@@ -1,0 +1,507 @@
+#parse("dashboard.html")
+#@mainLayout()
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<div class="row ">
+    <div>
+        <div >
+            <form action='/medias/' method="get" id="formtype">
+                <select id="selecttype" class="form-control">
+                    #set( $what = "Type" )
+                    <option>$what</option>
+                    #foreach($type in $types)
+                    #set( $what = $type )
+                    <option id=$what>$what</option>
+                    #end
+                </select>
+            </form>
+        </div>
+    </div>
+    <div>
+        <div >
+            <form action='/medias/' method="get" id="formmedia">
+                <select id="selectgenre" class="form-control">
+                    #set( $gender = "Genre" )
+                    <option value="null">$gender</option>
+                    #foreach($genre in $genres)
+                    #set( $gender = $genre )
+                    <option value="$genre.getName()">$gender</option>
+                    #end
+                </select>
+            </form>
+        </div>
+    </div>
+    <div>
+        <div >
+            <form action='/medias/' method="get" id="formyears">
+                <select id="selectyear" class="form-control">
+                    #set( $date = "Année" )
+                    <option value="null">$date</option>
+                    #foreach($year in $years)
+                    #set( $date = $year )
+                    <option value="$genre.getName()">$date</option>
+                    #end
+                </select>
+            </form>
+        </div>
+    </div>
+    <div>
+        <form id="write"  method="get">
+            <input  id="search" name="title" class="form-control" placeholder="Rechercher un film ou une série">
+        </form>
+    </div>
+    <div>
+
+        <button id="button" value='myFunction()' class="btn btn-block bg-red" onclick="clickvalide()">Valider</button>
+
+    </div>
+</div>
+
+<div id="run" data-genre='Genre' data-type='Type' data-year='Année' data-sch=''>
+</div>
+
+<!--
+<div class="media-list">
+    #foreach($media in $medias)
+    <a class="item" href="/medias/$media.getId()">
+        <div class="title">
+            $media.getTitle()
+            </div>
+        <div>
+            <img src="$media.getUrlImage()" width="500" height="600">
+            </div>
+        </a>
+    #end
+</div>
+
+-->
+<script type="text/javascript" >
+    function tab(id) {
+        tableau = []
+        var x = document.getElementById(id);
+        for (let i = 0; i <x.length; i++) {
+            tableau.push(x.options[i].text)
+        }
+        return tableau;
+    }
+    function run() {
+        document.getElementById('run').innerHTML=
+            "<div class=\"media-list\">\n" +
+            "    #foreach($media in $medias)\n" +
+            "    <a class=\"item\" href=\"/medias/$media.getId()\">\n" +
+            "        <div class=\"title\">\n" +
+            "            $media.getTitle()\n" +
+            "        </div>\n" +
+            "        <div>\n" +
+            "            <img src=\"$media.getUrlImage()\" width=\"500\" height=\"600\">\n" +
+            "        </div>\n" +
+            "    </a>\n" +
+            "    #end\n" +
+            "</div>";
+    }
+
+    function whatgender(g) {
+
+        document.getElementById('run').innerHTML=
+            "<div>\n" +
+            "    #foreach($genre in $genres)\n" +
+            "    $genre\n" +
+            "    #end\n" +
+            "</div>";
+
+    }
+
+    function clickvalide() {
+        var x = document.getElementById("selectgenre");
+        var i = x.selectedIndex;
+
+        var x2 = document.getElementById("selecttype");
+        var i2 = x2.selectedIndex;
+
+        var x3 = document.getElementById("selectyear");
+        var i3 = x3.selectedIndex;
+
+        var position = x.options[i].text;
+        var position1 = x2.options[i2].text;
+        var position2 = x3.options[i3].text;
+        var position3 = document.getElementById('search').value;
+
+        console.log('star : '+position)
+        console.log('star : '+position1)
+        console.log('star : '+position2)
+        console.log('star : '+position3)
+
+        tableauType = tab('selecttype');
+        tableauDate = tab('selectyear');
+        tableauGenre = tab('selectgenre');
+        console.log(tableauType);
+        console.log(tableauDate);
+        console.log(tableauGenre);
+
+        if(position== tableauGenre[0]&& position1 == tableauType[0] && position2== tableauDate[0] && position3 == "" ){
+            run();
+        }else{
+
+            position3
+            position1
+            position2
+            position
+
+        }
+
+    }
+
+    clickvalide();
+
+
+</script>
+
+
+
+<!--
+<script type="text/javascript" >
+
+    function tab(id) {
+
+        tableau = []
+        var x = document.getElementById(id);
+        for (let i = 0; i <x.length; i++) {
+            tableau.push(x.options[i].text)
+        }
+        return tableau;
+
+    }
+
+
+
+
+    function runCheck() {
+        var typetab = tab('selecttype');
+        var genretab = tab('selectgenre');
+        var datetab = tab('selectyear');
+
+
+        var a = document.getElementById("run").getAttribute('data-genre')
+        var b = document.getElementById("run").getAttribute('data-type')
+        var c = document.getElementById("run").getAttribute('data-year')
+        var d = document.getElementById("run").getAttribute('data-sch')
+        //console.log('back : '+a)
+        //console.log('back : '+document.getElementById("run").getAttribute('data-type'))
+        //console.log('back : '+document.getElementById("run").getAttribute('data-year'))
+        //console.log('back : '+document.getElementById("run").getAttribute('data-sch'))
+
+
+        if(a != 'Genre'){
+            console.log('test')
+            document.getElementById('run').innerHTML=
+                "<div class=\"media-list\">\n" +
+                "    #foreach($ab in $action)\n" +
+                "    <a class=\"item\" href=\"/medias/$ab.getId()\">\n" +
+                "        <div class=\"title\">\n" +
+                "            $ab.getTitle()\n" +
+                "        </div>\n" +
+                "        <div>\n" +
+                "            <img src=\"$ab.getUrlImage()\" width=\"500\" height=\"600\">\n" +
+                "        </div>\n" +
+                "    </a>\n" +
+                "    #end\n" +
+                "</div>";
+
+        }else if (b!='Type'){
+            document.getElementById('run').innerHTML=
+                "<div class=\"media-list\">\n" +
+                "    #foreach($a in $"+'b'+")\n" +
+                "    <a class=\"item\" href=\"/medias/$a.getId()\">\n" +
+                "        <div class=\"title\">\n" +
+                "            $a.getTitle()\n" +
+                "        </div>\n" +
+                "        <div>\n" +
+                "            <img src=\"$a.getUrlImage()\" width=\"500\" height=\"600\">\n" +
+                "        </div>\n" +
+                "    </a>\n" +
+                "    #end\n" +
+                "</div>";
+        }else if(c!='Année'){
+            document.getElementById('run').innerHTML=
+                "<div class=\"media-list\">\n" +
+                "    #foreach($a in $"+'c'+")\n" +
+                "    <a class=\"item\" href=\"/medias/$a.getId()\">\n" +
+                "        <div class=\"title\">\n" +
+                "            $a.getTitle()\n" +
+                "        </div>\n" +
+                "        <div>\n" +
+                "            <img src=\"$a.getUrlImage()\" width=\"500\" height=\"600\">\n" +
+                "        </div>\n" +
+                "    </a>\n" +
+                "    #end\n" +
+                "</div>";
+                }
+        else {
+            document.getElementById('run').innerHTML=
+                "<div class=\"media-list\">\n" +
+                "test" +
+                "</div>";
+        }
+
+    }
+
+
+
+    function myFunction() {
+        //console.log('star : '+document.getElementById("run").getAttribute('data-genre'))
+        //console.log('star : '+document.getElementById("run").getAttribute('data-type'))
+        //console.log('star : '+document.getElementById("run").getAttribute('data-year'))
+        //console.log('star : '+document.getElementById("run").getAttribute('data-sch'))
+        var x = document.getElementById("selectgenre");
+        var i = x.selectedIndex;
+
+        var x2 = document.getElementById("selecttype");
+        var i2 = x2.selectedIndex;
+
+        var x3 = document.getElementById("selectyear");
+        var i3 = x3.selectedIndex;
+
+        var position = x.options[i].text;
+        var position2 = x2.options[i2].text;
+        var position3 = x3.options[i3].text;
+        var position4 = document.getElementById('search').value
+
+        if( position == 'Genre' && position2 == 'Type' && position3 == 'Année' && position4 == ''){
+
+            document.getElementById("run").setAttribute("data-genre",'Genre');
+            document.getElementById("run").setAttribute("data-type",'Type');
+            document.getElementById("run").setAttribute("data-year",'Année');
+            document.getElementById("run").setAttribute("data-sch",'');
+            //$("#run").load(" #run")
+            run();
+        }else{
+
+            document.getElementById("run").setAttribute("data-genre",position);
+            document.getElementById("run").setAttribute("data-type",position2);
+            document.getElementById("run").setAttribute("data-year",position3);
+            document.getElementById("run").setAttribute("data-sch",position4);
+            //console.log(document.getElementById("run").getAttribute('data-genre'))
+            //console.log(document.getElementById("run").getAttribute('data-type'))
+            //console.log(document.getElementById("run").getAttribute('data-year'))
+            //console.log(document.getElementById("run").getAttribute('data-sch'))
+            //$("#run").load(" #run")
+            start();
+        }
+    }
+
+    function start() {
+        var genre = document.getElementById("run").getAttribute('data-genre');
+        var typer = document.getElementById("run").getAttribute('data-type');
+        var year = document.getElementById("run").getAttribute('data-year');
+        var sch = document.getElementById("run").getAttribute('data-sch');
+
+        if (genre == 'Genre' && typer == 'Type' && year == 'Année' && sch == '') {
+            //console.log('check if')
+            //console.log(document.getElementById("run").getAttribute('data-genre'))
+            //console.log(document.getElementById("run").getAttribute('data-type'))
+            //console.log(document.getElementById("run").getAttribute('data-year'))
+            //console.log(document.getElementById("run").getAttribute('data-sch'))
+            run()
+        }else {
+            //console.log('check else')
+            //console.log(document.getElementById("run").getAttribute('data-genre'))
+            //console.log(document.getElementById("run").getAttribute('data-type'))
+            //console.log(document.getElementById("run").getAttribute('data-year'))
+            //console.log(document.getElementById("run").getAttribute('data-sch'))
+            runCheck()
+        }
+
+    }
+
+   // document.getElementById('selectgenre').contains();
+    start();
+
+</script>
+
+
+
+<script>
+
+
+    function myFunction() {
+
+        var x = document.getElementById("selectgenre");
+        var i = x.selectedIndex;
+
+        var x2 = document.getElementById("selecttype");
+        var i2 = x2.selectedIndex;
+
+        var x3 = document.getElementById("selectyear");
+        var i3 = x3.selectedIndex;
+
+        var position = x.options[i].text;
+        var position2 = x2.options[i2].text;
+        var position3 = x3.options[i3].text;
+
+
+        var search = document.getElementById('search').value
+
+
+        if( position == 'Genre' && position2 == 'Type' && position3 == 'Année' ){//&& search == 'Sch'){
+
+            document.getElementById("running").setAttribute("data-genre","Genre");
+            document.getElementById("running").setAttribute("data-type","Type");
+            document.getElementById("running").setAttribute("data-year","Année");
+            //document.getElementById("running").setAttribute("data-sch","Sch");
+            run();
+        }
+
+    }
+
+
+
+    function run() {
+        document.getElementById('running').innerHTML=
+                "<div class=\"media-list\">\n" +
+                "    #foreach($media in $medias)\n" +
+                "    <a class=\"item\" href=\"/medias/$media.getId()\">\n" +
+                "        <div class=\"title\">\n" +
+                "            $media.getTitle()\n" +
+                "        </div>\n" +
+                "        <div>\n" +
+                "            <img src=\"$media.getUrlImage()\" width=\"500\" height=\"600\">\n" +
+                "        </div>\n" +
+                "    </a>\n" +
+                "    #end\n" +
+                "</div>";
+    }
+
+    var genre = document.getElementById("running").getAttribute('data-genre');
+    var typer = document.getElementById("running").getAttribute('data-type');
+    var year = document.getElementById("running").getAttribute('data-year');
+    //var search = document.getElementById('search').value
+
+    if (genre == 'Genre' && typer == 'Type' && year == 'Year' ){//&& search == 'Sch') {
+        console.log('check if')
+        run()
+    }else {
+        /*
+        console.log('check else')
+        document.getElementById('running').innerHTML=
+            "<div>\n" +
+            "    #set( $fo = '"+genre+"' )\n" +
+            "    $fo\n" +
+            "</div>";
+
+         */
+    }
+
+
+</script>
+#end
+
+
+
+if(document.getElementById("running").value == 'value'){
+            document.getElementById('running').innerHTML=
+                "<div class=\"media-list\">\n" +
+                "    #foreach($media in $medias)\n" +
+                "    <a class=\"item\" href=\"/medias/$media.getId()\">\n" +
+                "        <div class=\"title\">\n" +
+                "            $media.getTitle()\n" +
+                "        </div>\n" +
+                "        <div>\n" +
+                "            <img src=\"$media.getUrlImage()\" width=\"500\" height=\"600\">\n" +
+                "        </div>\n" +
+                "    </a>\n" +
+                "    #end\n" +
+                "</div>";
+        }
+
+
+
+<div class="media-list">
+    #foreach($media in $medias)
+    <a class="item" href="/medias/$media.getId()">
+        <div class="title">
+            $media.getTitle()
+        </div>
+        <div>
+            <img src="$media.getUrlImage()" width="500" height="600">
+        </div>
+    </a>
+    #end
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="row container">
+
+        <div >
+            <form action='media_list.html' method="post" id="formmedia">
+                <select id="selectgenre" class="form-control">
+                    #set( $foo = "Genre" )
+                    <option value="null">$foo</option>
+                    #foreach($genre in $genres)
+                    #set( $foo = $genre.getName() )
+                    <option value="$genre.getName()">$foo</option>
+                    #end
+                </select>
+            </form>
+        </div>
+
+    <div>
+
+        <button id="button" value="submit" class="btn btn-block bg-red" onclick="myFunction()" >Valider</button>
+
+    </div>
+        <div>
+            <form action="/medias/" method="get">
+            <input type="search" id="search" name="title" class="form-control" placeholder="Rechercher un film ou une série">
+            </form>
+        </div>
+
+    </form>
+
+
+    <p id="demo"></p>
+    <div id="contentPage">
+
+
+    </div>
+    <div class=\"media-list\">
+        #foreach($media in $medias)
+        <a class=\"item\" href=\"/medias/$media.getId()\">
+            <div class=\"title\">
+                $media.getTitle()
+            </div>
+            <div>
+            <img src=\"$media.getUrlImage()\" width=\"500\" height=\"600\">
+            </div>
+        </a>
+    </div>
+
+
+
+
+
+    <script>
+
+
+        console.log(document.getElementById('demo').valueOf())
+
+
+
+        function reload() {
+            document.getElementById("iframe");
+        }
+        //window.setInterval("reload();", 10000);
+    </script>
+
+
+</div>
+
+#end
+-->
