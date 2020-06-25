@@ -1,0 +1,19 @@
+.maincont div{
+    background-color: black;
+    resize: horizontal;
+    overflow: hidden;
+    display: flex;
+    margin: 1em;
+}
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+    background-color: black;
+}
+.list .itembox {
+    flex-basis: 24%;
+    margin: 4px;
+    background: #1f1f1f;
+    padding-bottom: 27px;
+}
